@@ -91,16 +91,12 @@ class CurlPost implements RequestMethod
         ];
         curl_setopt_array($handle, $options);
 
-        try {
-            $response = curl_exec($handle);
+        $response = curl_exec($handle);
 
-            if (is_string($response)) {
-                return $response;
-            }
-
-            return '{"success": false, "error-codes": ["'.ReCaptcha::E_CONNECTION_FAILED.'"]}';
-        } finally {
-            curl_close($handle);
+        if (is_string($response)) {
+            return $response;
         }
+
+        return '{"success": false, "error-codes": ["'.ReCaptcha::E_CONNECTION_FAILED.'"]}';
     }
 }
